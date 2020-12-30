@@ -146,7 +146,7 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(post.get_absolute_url())
             subject = f"{cd['name']} recommends you read {post.title}"
             message = f"Read {post.title} at {post_url}\n\n{cd['name']}\'s comments: {cd['comments']}"
-            send_mail(subject, message, "daniel020197ss@gmail.com", [cd["to"]]) # Check pág. 45 from "Django Book".
+            send_mail(subject, message, "xxxxxx@gmail.com", [cd["to"]]) # Add the same email that you added in "settings.py".
             sent = True
     else:
         form = EmailPostForm() # If we get "GET" instead of a "POST" request, we display an empty form instace for the user to fill in.
