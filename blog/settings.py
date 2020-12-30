@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 # For Send Emails via SMTP server:
 
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "daniel020197ss@gmail.com"
-EMAIL_HOST_PASSWORD = "guitarras5"
+EMAIL_HOST_USER = "xxxxx@gmail.com" # Ingresa tu correo gmail desde el cual se enviarán los correos.
+EMAIL_HOST_PASSWORD = "xxxxx" # Ingresa tu contraseña.
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
