@@ -1,0 +1,67 @@
+{% extends 'users_blog/base.html' %} <!-- In order for this child page to inherit from the parent page (base.html). This is a must. -->
+
+{% load blog_tags %} <!-- Loading custom template tags/filters. -->
+
+{% block title %}{{ post.title }}{% endblock%}
+
+{% block content %}
+    <h1>{{ post.title }}</h1> <!-- This way, we are accessing to the title field (or attribute) from the post (or instance from the clas Post). -->
+    <p class="date">Published {{ post.publish }} by {{ post.author }}</p> <!-- We obtain the publish and author fields (or attributes) from the post. -->
+    
+    <!-- {{ post.body|linebreaks }} # This tells Django to show the body field from the post and to show the "enters" (from the keyboard) -->
+
+    {{ post.body|markdown }} <!-- This way, we are going to render the content from the body field of the post into HTML code. -->
+
+    <p><a href="{% url 'users_blog:post_share' post.id %}">Share this post</a></p>
+
+    <h2>Similar Posts</h2>
+    {% for post in similar_posts %}
+        <p>
+            <a href="{{ post.get_absolute_ulr }}">{{ post.title }}</a>
+        </p>
+        {% empty %}
+            There are no similar posts yet.
+    {% endfor %}
+
+    <p class="tags">
+        Tags: {% for tag in post.tags.all %}
+                <a href="{% url 'users_blog:post_list_by_tag' tag.slug %}">{{tag.name}}</a>
+                {% if not forloop.last %},{% endif %}
+                {% endfor %}
+    </p>
+
+    <!-- Adding comments -->
+    {% with comments.count as total_comments %} <!-- "Django template language" doesn't use parentheses for calling methods (comments.count()). -->
+        <h2>{{ total_comments }} comment{{ total_comments|pluralize }}</h2>
+    {% endwith %}
+
+    <!-- Including the list of comments -->
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                Comment {{ forloop.counter }} by "{{ comment.name }}"
+                <br/>
+                {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+        {% empty %} <!-- If the comments list is "empty" we display a default message to inform the users that there isn't comments yet. -->
+            <p>There are no comments yet.</p>
+    {% endfor %}
+
+    <!-- Verifying for "new comments" -->
+    {% if new_comment %}
+        <h2>Your comment has been posted.</h2>
+    {% else %}
+        <h2>Add a new comment</h2>
+        <form method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Add comment"></p>
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+<!-- NOTE: {°|° url °|°} tag allow us to build a dynamic URL. -->
+<!-- NOTE: The {°|° with °|°} template tag is useful for avoiding hitting the database or accessing expensive methods multiple times. -->
