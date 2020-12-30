@@ -20,10 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ln2!w^bwtuy7i8orzm_@&z4wvl-hfk$e-*)iz-9s01k_l#xjsp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [] # Whenever we set DEBUG = False and we start using a production server, we must add our domain/host to this list in order to host our Django site.
 
